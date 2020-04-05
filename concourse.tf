@@ -45,64 +45,64 @@ module "kubernetes-cluster" {
 //}
 
 # Concourse needs 2 AWS EBS...
-//resource "aws_ebs_volume" "worker-ebs" {
-//
-//  availability_zone = var.availability_zone
-//  size              = var.worker_storage_size
-//
-//  tags = {
-//    Name = "worker-storage-ebs"
-//  }
-//
-//}
-//
-//resource "local_file" "worker-persistent-volume-0-yaml" {
-//
-//  content  = templatefile("${path.cwd}/k8s/worker-persistent-volume-0.yaml", { VOLUME_ID = aws_ebs_volume.worker-ebs.id })
-//  filename = "${path.cwd}/${var.cluster_name}/worker-persistent-volume-0.yaml"
-//
-//}
-//
-//resource "local_file" "worker-persistent-volume-1-yaml" {
-//
-//  content  = templatefile("${path.cwd}/k8s/worker-persistent-volume-1.yaml", { VOLUME_ID = aws_ebs_volume.worker-ebs.id })
-//  filename = "${path.cwd}/${var.cluster_name}/worker-persistent-volume-1.yaml"
-//
-//}
-//
-//resource "aws_ebs_volume" "postgresql-ebs" {
-//
-//  availability_zone = var.availability_zone
-//  size              = var.postgresql_storage_size
-//
-//  tags = {
-//    Name = "postgresql-storage-ebs"
-//  }
-//
-//}
+resource "aws_ebs_volume" "worker-ebs" {
 
-//resource "local_file" "postgresql-persistent-volume-0-yaml" {
-//
-//  content  = templatefile("${path.cwd}/k8s/postgresql-persistent-volume-0.yaml", { VOLUME_ID = aws_ebs_volume.postgresql-ebs.id })
-//  filename = "${path.cwd}/${var.cluster_name}/postgresql-persistent-volume-0.yaml"
-//
-//}
+  availability_zone = var.availability_zone
+  size              = var.worker_storage_size
+
+  tags = {
+    Name = "worker-storage-ebs"
+  }
+
+}
+
+resource "local_file" "worker-persistent-volume-0-yaml" {
+
+  content  = templatefile("${path.cwd}/k8s/worker-persistent-volume-0.yaml", { VOLUME_ID = aws_ebs_volume.worker-ebs.id })
+  filename = "${local.folder}/worker-persistent-volume-0.yaml"
+
+}
+
+resource "local_file" "worker-persistent-volume-1-yaml" {
+
+  content  = templatefile("${path.cwd}/k8s/worker-persistent-volume-1.yaml", { VOLUME_ID = aws_ebs_volume.worker-ebs.id })
+  filename = "${local.folder}/worker-persistent-volume-1.yaml"
+
+}
+
+resource "aws_ebs_volume" "postgresql-ebs" {
+
+  availability_zone = var.availability_zone
+  size              = var.postgresql_storage_size
+
+  tags = {
+    Name = "postgresql-storage-ebs"
+  }
+
+}
+
+resource "local_file" "postgresql-persistent-volume-0-yaml" {
+
+  content  = templatefile("${path.cwd}/k8s/postgresql-persistent-volume-0.yaml", { VOLUME_ID = aws_ebs_volume.postgresql-ebs.id })
+  filename = "${local.folder}/postgresql-persistent-volume-0.yaml"
+
+}
 
 # Using Helm install Concourse on the previously created Kubernetes cluster...
 
-resource "local_file" "install-concourse-script" {
-
-  content  = templatefile("${path.cwd}/scripts/install_concourse.sh", { FOLDER = local.folder })
-  filename = "${path.cwd}/${local.folder}/install_concourse.sh"
-
-}
+//resource "local_file" "install-concourse-script" {
+//
+//  content  = templatefile("${path.cwd}/scripts/install_concourse.sh", { FOLDER = local.folder })
+//  filename = "${path.cwd}/${local.folder}/install_concourse.sh"
+//
+//}
 
 resource "null_resource" "install-concourse" {
 
   depends_on = [
-    #aws_ebs_volume.worker-ebs,
-    #aws_ebs_volume.postgresql-ebs,
-    #data.aws_s3_bucket_object.kube-config-yaml
+    aws_ebs_volume.worker-ebs,
+    aws_ebs_volume.postgresql-ebs,
+    #data.aws_s3_bucket_object.kube-config-yaml,
     module.kubernetes-cluster
   ]
 
@@ -111,7 +111,7 @@ resource "null_resource" "install-concourse" {
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/install_concourse.sh | bash"
+    command = "chmod +x ${path.module}/scripts/install_concourse.sh && ${path.module}/scripts/install_concourse.sh | bash"
     environment = {
       FOLDER = "${local.folder}"
     }
