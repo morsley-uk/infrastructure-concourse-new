@@ -1,0 +1,13 @@
+﻿apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: postgresql-storage-class
+#  annotations:
+#    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2 # General purpose SSD
+  fsType: ext4
+#mountOptions:
+#  - debug
+#volumeBindingMode: Immediate
