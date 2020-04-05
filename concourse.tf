@@ -111,11 +111,11 @@ resource "null_resource" "install-concourse" {
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
-    command = "chmod +x ${path.module}/scripts/install_concourse.sh && ${path.module}/scripts/install_concourse.sh | bash"
+    command = "chmod +x ${path.module}/scripts/install_concourse.sh && bash ${path.module}/scripts/install_concourse.sh"
     environment = {
-      FOLDER = "${local.folder}"
-      DEPLOYMENT_NAME = "${var.deployment_name}"
-      NAMSPACE = "${var.namespace}"
+      FOLDER = local.folder
+      DEPLOYMENT_NAME = var.deployment_name
+      NAMESPACE = var.namespace
     }
   }
 

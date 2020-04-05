@@ -14,7 +14,9 @@ echo '##########################################################################
 echo '# INSTALL CONCOURSE...'
 echo '###############################################################################'
       
-set -x    
+#set -x    
+
+echo "pwd: " $(pwd)
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
@@ -47,7 +49,7 @@ helm install ${DEPLOYMENT_NAME} concourse/concourse \
 
 # https://rancher.com/docs/rancher/v2.x/en/installation/options/troubleshooting/
 
-set +x
+#set +x
 
 echo '###############################################################################'
 echo '# INSTALL CONCOURSE'
