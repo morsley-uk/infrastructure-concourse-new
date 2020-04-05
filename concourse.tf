@@ -23,8 +23,10 @@ module "kubernetes-cluster" {
   public_subnet_cidr_block = var.public_subnet_cidr_block
   availability_zone        = var.availability_zone
 
-  domain = "morsley.io"
+  domain    = "morsley.io"
   subdomain = "concourse"
+
+  folder = local.folder
 
 }
 
@@ -101,15 +103,18 @@ resource "null_resource" "install-concourse" {
     #aws_ebs_volume.worker-ebs,
     #aws_ebs_volume.postgresql-ebs,
     #data.aws_s3_bucket_object.kube-config-yaml
-    module.kubernetes-cluster    
+    module.kubernetes-cluster
   ]
 
   #mock_depends_on = [module.kubernetes-cluster]
-  
+
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
-    command = "chmod +x ${path.cwd}/${local.folder}/install_concourse.sh && bash ${path.cwd}/${local.folder}/install_concourse.sh"
+    command = "${path.module}/scripts/install_concourse.sh | bash"
+    environment = {
+      FOLDER = "${local.folder}"
+    }
   }
 
 }
