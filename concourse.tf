@@ -113,3 +113,13 @@ resource "null_resource" "install-concourse" {
   }
 
 }
+
+//module "route53" {
+//
+//  source = "../terraform-aws-kubernetes-cluster/modules/route53"
+//
+//  domain = var.domain
+//  subdomain = var.subdomain
+//  public_ip = module.kubernetes-cluster.public_ip
+//  
+//}
