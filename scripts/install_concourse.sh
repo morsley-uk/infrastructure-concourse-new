@@ -19,6 +19,7 @@ set -x
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
 chmod 400 ${FOLDER}/*.pem
+chmod 400 ${FOLDER}/*.pub
   
 # Concourse...
 
@@ -35,7 +36,7 @@ helm repo add concourse https://concourse-charts.storage.googleapis.com/
 
 kubectl create namespace ${NAMESPACE}
 
-helm install ${NAME} concourse/concourse \
+helm install ${DEPLOYMENT_NAME} concourse/concourse \
   --values $(pwd)/k8s/concourse-values.yaml \
   --namespace ${NAMESPACE}
 

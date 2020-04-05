@@ -114,6 +114,8 @@ resource "null_resource" "install-concourse" {
     command = "chmod +x ${path.module}/scripts/install_concourse.sh && ${path.module}/scripts/install_concourse.sh | bash"
     environment = {
       FOLDER = "${local.folder}"
+      DEPLOYMENT_NAME = "${var.deployment_name}"
+      NAMSPACE = "${var.namespace}"
     }
   }
 

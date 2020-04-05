@@ -20,6 +20,14 @@ variable "cluster_name" {
   default = "concourse-k8s"
 }
 
+variable "namespace" {
+  default = "concourse"
+}
+
+variable "deployment_name" {
+  default = "concourse"
+}
+
 variable "vpc_cidr_block" {
   default = "10.0.0.0/16"
 }
