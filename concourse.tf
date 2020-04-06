@@ -95,11 +95,14 @@ resource "null_resource" "install-istio" {
   depends_on = [
     module.kubernetes-cluster
   ]
-  
+
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
     command = "chmod +x ${path.module}/scripts/install_istio.sh && bash ${path.module}/scripts/install_istio.sh"
+    environment = {
+      FOLDER = local.folder
+    }
   }
 
 }
