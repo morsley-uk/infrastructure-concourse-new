@@ -18,15 +18,18 @@ export KUBECONFIG=${FOLDER}/kube_config.yaml
 
 curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.5.1 sh -
 
-cd istio-1.5.1
+cd istio-1.5.1/bin
 
-export PATH=$PWD/bin:$PATH
+chmod +x istioctl
+
+ls -la
 
 istioctl manifest apply \
    --set addonComponents.grafana.enabled=true \
    --set addonComponents.kiali.enabled=true \
    --set addonComponents.prometheus.enabled=true \
-   --set addonComponents.tracing.enabled=true
+   --set addonComponents.tracing.enabled=true \
+   --skip-confirmation
    
 echo '###############################################################################'
 echo '# ISTIO INSTALLED'
