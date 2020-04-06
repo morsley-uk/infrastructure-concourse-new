@@ -29,7 +29,7 @@ kubectl apply --filename $(pwd)/k8s/worker-storage-class.yaml
 kubectl apply --filename ${FOLDER}/worker-persistent-volume-0.yaml
 kubectl apply --filename ${FOLDER}/worker-persistent-volume-1.yaml
 
-kubectl apply --filename $(pwd)/k8s/postgresql-storage-classs.yaml
+kubectl apply --filename $(pwd)/k8s/postgresql-storage-class.yaml
 kubectl apply --filename ${FOLDER}/postgresql-persistent-volume-0.yaml
 
 helm repo add concourse https://concourse-charts.storage.googleapis.com/
