@@ -101,12 +101,18 @@ resource "null_resource" "install-istio" {
     host        = module.kubernetes-cluster.public_ip
     user        = "ubuntu"
     private_key = module.kubernetes-cluster.private_key
-  }  
-  
-  # https://www.terraform.io/docs/provisioners/local-exec.html
+  }
+
+  # https://www.terraform.io/docs/provisioners/file.html
+
+  provisioner "file" {
+    source      = "${path.module}/scripts/install_istio.sh"
+    destination = "install_istio.sh"
+  }
+  # https://www.terraform.io/docs/provisioners/remote-exec.html
 
   provisioner "remote-exec" {
-    command = "chmod +x ${path.module}/scripts/install_istio.sh && bash ${path.module}/scripts/install_istio.sh"
+    inline = ["chmod +x install_istio.sh && bash install_istio.sh"]
   }
 
 }
