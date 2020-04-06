@@ -38,6 +38,8 @@ helm repo add concourse https://concourse-charts.storage.googleapis.com/
 
 kubectl create namespace ${NAMESPACE}
 
+kubectl label namespace ${NAMESPACE} istio-injection=enabled
+
 helm install ${DEPLOYMENT_NAME} concourse/concourse \
   --values $(pwd)/k8s/concourse-values.yaml \
   --namespace ${NAMESPACE}
@@ -52,7 +54,7 @@ helm install ${DEPLOYMENT_NAME} concourse/concourse \
 #set +x
 
 echo '###############################################################################'
-echo '# INSTALL CONCOURSE'
+echo '# CONCOURSE INSTALLED'
 echo '###############################################################################'
 
 exit 0
