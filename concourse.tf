@@ -90,32 +90,21 @@ module "kubernetes-cluster" {
 
 # Install Istio...
 
-resource "null_resource" "install-istio" {
-
-  depends_on = [
-    module.kubernetes-cluster
-  ]
-
-  connection {
-    type        = "ssh"
-    host        = module.kubernetes-cluster.public_ip
-    user        = "ubuntu"
-    private_key = module.kubernetes-cluster.private_key
-  }
-
-  # https://www.terraform.io/docs/provisioners/file.html
-
-  provisioner "file" {
-    source      = "${path.module}/scripts/install_istio.sh"
-    destination = "install_istio.sh"
-  }
-  # https://www.terraform.io/docs/provisioners/remote-exec.html
-
-  provisioner "remote-exec" {
-    inline = ["chmod +x install_istio.sh && bash install_istio.sh"]
-  }
-
-}
+//resource "null_resource" "install-istio" {
+//
+//  depends_on = [
+//    module.kubernetes-cluster
+//  ]
+//  # https://www.terraform.io/docs/provisioners/local-exec.html
+//  
+//  provisioner "local-exec" {
+//    command = "chmod +x scripts/install_istio.sh && bash scripts/install_istio.sh"
+//    environment = {
+//      FOLDER = local.folder
+//    }
+//  }  
+//  
+//}
 
 # Using Helm install Concourse on the previously created Kubernetes cluster...
 

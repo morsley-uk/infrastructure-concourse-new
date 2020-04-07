@@ -14,13 +14,7 @@ echo '##########################################################################
 echo '# INSTALL ISTIO...'
 echo '###############################################################################'
 
-curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.5.1 sh -
-
-cd istio-1.5.1/bin
-
-chmod +x istioctl
-
-ls -la
+export KUBECONFIG=${FOLDER}/kube_config.yaml
 
 istioctl manifest apply \
    --set addonComponents.grafana.enabled=true \
@@ -28,8 +22,6 @@ istioctl manifest apply \
    --set addonComponents.prometheus.enabled=true \
    --set addonComponents.tracing.enabled=true \
    --skip-confirmation
-
-kubetctl get all --all-namespaces
    
 echo '###############################################################################'
 echo '# ISTIO INSTALLED'
