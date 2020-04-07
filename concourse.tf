@@ -90,21 +90,21 @@ module "kubernetes-cluster" {
 
 # Install Istio...
 
-//resource "null_resource" "install-istio" {
-//
-//  depends_on = [
-//    module.kubernetes-cluster
-//  ]
-//  # https://www.terraform.io/docs/provisioners/local-exec.html
-//  
-//  provisioner "local-exec" {
-//    command = "chmod +x scripts/install_istio.sh && bash scripts/install_istio.sh"
-//    environment = {
-//      FOLDER = local.folder
-//    }
-//  }  
-//  
-//}
+resource "null_resource" "install-istio" {
+
+  depends_on = [
+    module.kubernetes-cluster
+  ]
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "chmod +x scripts/install_istio.sh && bash scripts/install_istio.sh"
+    environment = {
+      FOLDER = local.folder
+    }
+  }  
+
+}
 
 # Using Helm install Concourse on the previously created Kubernetes cluster...
 
