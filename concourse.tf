@@ -32,6 +32,8 @@ module "kubernetes-cluster" {
 
 data "aws_s3_bucket_object" "kube-config-yaml" {
 
+  depends_on = [module.kubernetes-cluster]
+  
   bucket = local.bucket_name
   key    = "/${var.cluster_name}/kube_config.yaml"
 
@@ -39,6 +41,8 @@ data "aws_s3_bucket_object" "kube-config-yaml" {
 
 resource "local_file" "kube-config-yaml" {
 
+  depends_on = [module.kubernetes-cluster]
+  
   content  = data.aws_s3_bucket_object.kube-config-yaml.body
   filename = "${path.cwd}/${var.cluster_name}/kube_config.yaml"
 
@@ -102,7 +106,7 @@ resource "null_resource" "install-istio" {
     environment = {
       FOLDER = local.folder
     }
-  }  
+  }
 
 }
 
@@ -113,7 +117,7 @@ resource "null_resource" "is-istio-ready" {
   depends_on = [
     null_resource.install-istio
   ]
-  
+
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
@@ -141,9 +145,9 @@ resource "null_resource" "install-concourse" {
   provisioner "local-exec" {
     command = "chmod +x ${path.module}/scripts/install_concourse.sh && bash ${path.module}/scripts/install_concourse.sh"
     environment = {
-      FOLDER = local.folder
+      FOLDER          = local.folder
       DEPLOYMENT_NAME = var.deployment_name
-      NAMESPACE = var.namespace
+      NAMESPACE       = var.namespace
     }
   }
 
