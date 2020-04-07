@@ -57,7 +57,7 @@ print_deployment_footer () {
 
 are_deployments_ready () {
   
-  deployments_json=$(kubectl get deployments --namespace ${ISTIO_NAMESPACE=istio-system} --output "json")
+  deployments_json=$(kubectl get deployments --namespace ${ISTIO_NAMESPACE} --output "json")
   number_of_deployments=$(jq '.items | length' <<< $deployments_json)
     
   print_deployment_headers

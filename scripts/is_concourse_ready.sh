@@ -17,7 +17,9 @@ set -x
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
+CONCOURSE_NAMESPACE=concourse
 
+kubectl get all --namespace ${CONCOURSE_NAMESPACE}
 
 set +x
 
