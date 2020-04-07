@@ -106,6 +106,25 @@ resource "null_resource" "install-istio" {
 
 }
 
+# Is Istio ready...?
+
+resource "null_resource" "is-istio-ready" {
+
+  depends_on = [
+    null_resource.install-istio
+  ]
+  
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "chmod +x scripts/is_istio_ready.sh && bash scripts/is_istio_ready.sh"
+    environment = {
+      FOLDER = local.folder
+    }
+  }
+
+}
+
 # Using Helm install Concourse on the previously created Kubernetes cluster...
 
 //resource "null_resource" "install-concourse" {
