@@ -13,7 +13,7 @@ echo '##########################################################################
 echo '# IS CONCOURSE READY...?'
 echo '###############################################################################'
       
-set -x    
+#set -x    
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
@@ -165,7 +165,7 @@ print_divider
 kubectl get persisentvolumeclaims --all-namespaces
 print_divider
 
-set +x
+#set +x
 
 echo '###############################################################################'
 echo '# CONCOURSE IS READY'
