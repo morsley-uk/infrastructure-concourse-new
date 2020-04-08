@@ -140,7 +140,7 @@ while true; do
         break
     fi
 
-    sleep 5
+    sleep 30
 
 done
 

@@ -75,7 +75,6 @@ resource "local_file" "postgresql-persistent-volume-0-yaml" {
 }
 
 # Install Istio...
-
 //resource "null_resource" "install-istio" {
 //
 //  depends_on = [
@@ -93,7 +92,6 @@ resource "local_file" "postgresql-persistent-volume-0-yaml" {
 //}
 
 # Is Istio ready...?
-
 //resource "null_resource" "is-istio-ready" {
 //
 //  depends_on = [
@@ -112,7 +110,6 @@ resource "local_file" "postgresql-persistent-volume-0-yaml" {
 //}
 
 # Using Helm install Concourse on the previously created Kubernetes cluster...
-
 resource "null_resource" "install-concourse" {
 
   depends_on = [
@@ -136,7 +133,6 @@ resource "null_resource" "install-concourse" {
 }
 
 # Is Concourse ready...?
-
 resource "null_resource" "is-concourse-ready" {
 
   depends_on = [
@@ -154,12 +150,13 @@ resource "null_resource" "is-concourse-ready" {
 
 }
 
-//module "route53" {
-//
-//  source = "../terraform-aws-kubernetes-cluster/modules/route53"
-//
-//  domain = var.domain
-//  subdomain = var.subdomain
-//  public_ip = module.kubernetes-cluster.public_ip
-//  
-//}
+# Configure Route53...
+module "route53" {
+
+  source = "../terraform-aws-kubernetes-cluster/modules/route53"
+
+  domain = var.domain
+  subdomain = var.subdomain
+  public_ip = module.kubernetes-cluster.public_ip
+  
+}

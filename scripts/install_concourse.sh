@@ -44,6 +44,8 @@ helm install ${DEPLOYMENT_NAME} concourse/concourse \
   --values $(pwd)/k8s/concourse-values.yaml \
   --namespace ${NAMESPACE}
 
+kubectl apply --filename $(pwd)/k8s/concourse-ingress.yaml
+
 #kubectl --namespace ${NAMESPACE} rollout status ${NAME}
 
 # https://whynopadlock.com

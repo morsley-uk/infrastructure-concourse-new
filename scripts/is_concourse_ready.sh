@@ -55,6 +55,14 @@ print_deployment_footer () {
   
 }
 
+print_divider () {
+  
+  echo "-------------------------------------------------------------------------------"
+  
+  return 0
+  
+}
+
 are_deployments_ready () {
   
   deployments_json=$(kubectl get deployments --namespace ${CONCOURSE_NAMESPACE} --output "json")
@@ -89,9 +97,9 @@ are_deployments_ready () {
 
     print_deployment_row $ready $expected $available $updated $deployment_name
       
-      if [ $ready -ne $expected ]; then
-        is_ready="No"  
-      fi
+    if [ $ready -ne $expected ]; then
+      is_ready="No"  
+    fi
       
     done
     
