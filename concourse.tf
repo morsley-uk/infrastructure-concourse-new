@@ -76,40 +76,40 @@ resource "local_file" "postgresql-persistent-volume-0-yaml" {
 
 # Install Istio...
 
-resource "null_resource" "install-istio" {
-
-  depends_on = [
-    module.kubernetes-cluster
-  ]
-  # https://www.terraform.io/docs/provisioners/local-exec.html
-
-  provisioner "local-exec" {
-    command = "chmod +x scripts/install_istio.sh && bash scripts/install_istio.sh"
-    environment = {
-      FOLDER = local.folder
-    }
-  }
-
-}
+//resource "null_resource" "install-istio" {
+//
+//  depends_on = [
+//    module.kubernetes-cluster
+//  ]
+//  # https://www.terraform.io/docs/provisioners/local-exec.html
+//
+//  provisioner "local-exec" {
+//    command = "chmod +x scripts/install_istio.sh && bash scripts/install_istio.sh"
+//    environment = {
+//      FOLDER = local.folder
+//    }
+//  }
+//
+//}
 
 # Is Istio ready...?
 
-resource "null_resource" "is-istio-ready" {
-
-  depends_on = [
-    null_resource.install-istio
-  ]
-
-  # https://www.terraform.io/docs/provisioners/local-exec.html
-
-  provisioner "local-exec" {
-    command = "chmod +x scripts/is_istio_ready.sh && bash scripts/is_istio_ready.sh"
-    environment = {
-      FOLDER = local.folder
-    }
-  }
-
-}
+//resource "null_resource" "is-istio-ready" {
+//
+//  depends_on = [
+//    null_resource.install-istio
+//  ]
+//
+//  # https://www.terraform.io/docs/provisioners/local-exec.html
+//
+//  provisioner "local-exec" {
+//    command = "chmod +x scripts/is_istio_ready.sh && bash scripts/is_istio_ready.sh"
+//    environment = {
+//      FOLDER = local.folder
+//    }
+//  }
+//
+//}
 
 # Using Helm install Concourse on the previously created Kubernetes cluster...
 
@@ -118,8 +118,8 @@ resource "null_resource" "install-concourse" {
   depends_on = [
     aws_ebs_volume.worker-ebs,
     aws_ebs_volume.postgresql-ebs,
-    module.kubernetes-cluster,
-    null_resource.is-istio-ready
+    module.kubernetes-cluster#,
+    #null_resource.is-istio-ready
   ]
 
   # https://www.terraform.io/docs/provisioners/local-exec.html
