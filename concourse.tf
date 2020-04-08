@@ -115,7 +115,7 @@ resource "null_resource" "install-concourse" {
   depends_on = [
     aws_ebs_volume.worker-ebs,
     aws_ebs_volume.postgresql-ebs,
-    module.kubernetes-cluster#,
+    module.kubernetes-cluster #,
     #null_resource.is-istio-ready
   ]
 
@@ -182,8 +182,8 @@ resource "null_resource" "install-cert-manager" {
   provisioner "local-exec" {
     command = "chmod +x ${path.module}/scripts/install_cert_manager.sh && bash ${path.module}/scripts/install_cert_manager.sh"
     environment = {
-      FOLDER          = local.folder
-      NAMESPACE       = "cert-manager"
+      FOLDER    = local.folder
+      NAMESPACE = "cert-manager"
     }
   }
 
@@ -210,11 +210,11 @@ resource "null_resource" "is-cert-manager-ready" {
 
 # Configure Route53...
 module "route53" {
-  
+
   source = "../terraform-aws-kubernetes-cluster/modules/route53"
 
-  domain = var.domain
+  domain    = var.domain
   subdomain = var.subdomain
   public_ip = module.kubernetes-cluster.public_ip
-  
+
 }
