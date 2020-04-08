@@ -68,7 +68,7 @@ are_deployments_ready () {
   deployments_json=$(kubectl get deployments --namespace ${CONCOURSE_NAMESPACE} --output "json")
   number_of_deployments=$(jq '.items | length' <<< $deployments_json)
     
-  print_deployment_headers
+  #print_deployment_headers
   
   is_ready="Yes"
   
@@ -103,7 +103,7 @@ are_deployments_ready () {
       
     done
     
-    print_deployment_headers
+    #print_deployment_headers
     
   echo "${is_ready}"
   
@@ -134,6 +134,8 @@ is_numeric () {
 
 echo "Are deployments ready...?"
 
+print_deployment_headers
+
 while true; do
     
     #is_istio_ready
@@ -146,6 +148,8 @@ while true; do
     sleep 5
 
 done
+
+print_deployment_headers
 
 print_divider
 echo "Deployments:"
@@ -161,16 +165,6 @@ print_divider
 echo "Services:"
 print_divider
 kubectl get services --all-namespaces
-print_divider
-
-echo "Persistent Volumes:"
-print_divider
-kubectl get persisentvolumes --all-namespaces
-print_divider
-
-echo "Persistent Volume Claims:"
-print_divider
-kubectl get persisentvolumeclaims --all-namespaces
 print_divider
 
 #set +x
