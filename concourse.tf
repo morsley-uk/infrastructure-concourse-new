@@ -152,7 +152,7 @@ resource "null_resource" "is-concourse-ready" {
 }
 
 # Ingress...
-resource "null_resource" "ingress" {
+resource "null_resource" "concourse-ingress" {
 
   depends_on = [
     null_resource.is-concourse-ready
@@ -161,7 +161,7 @@ resource "null_resource" "ingress" {
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
-    command = "chmod +x scripts/ingress.sh && bash scripts/ingress.sh"
+    command = "chmod +x scripts/concourse-ingress.sh && bash scripts/concourse-ingress.sh"
     environment = {
       FOLDER    = local.folder
       NAMESPACE = var.namespace
