@@ -18,12 +18,17 @@ echo '##########################################################################
 
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
+#istioctl manifest apply \
+#  --set addonComponents.grafana.enabled=true \
+#  --set addonComponents.kiali.enabled=true \
+#  --set addonComponents.prometheus.enabled=true \
+#  --set addonComponents.tracing.enabled=true \
+#  --skip-confirmation
+
 istioctl manifest apply \
-   --set addonComponents.grafana.enabled=true \
-   --set addonComponents.kiali.enabled=true \
-   --set addonComponents.prometheus.enabled=true \
-   --set addonComponents.tracing.enabled=true \
-   --skip-confirmation
+  --set profile=default \
+  --set addonComponents.prometheus.enabled=false \
+  --skip-confirmation
    
 echo '###############################################################################'
 echo '# ISTIO INSTALLED'
