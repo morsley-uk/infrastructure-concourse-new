@@ -144,7 +144,27 @@ resource "null_resource" "is-concourse-ready" {
   provisioner "local-exec" {
     command = "chmod +x scripts/is_concourse_ready.sh && bash scripts/is_concourse_ready.sh"
     environment = {
-      FOLDER = local.folder
+      FOLDER    = local.folder
+      NAMESPACE = var.namespace
+    }
+  }
+
+}
+
+# Ingress...
+resource "null_resource" "ingress" {
+
+  depends_on = [
+    null_resource.is-concourse-ready
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "chmod +x scripts/ingress.sh && bash scripts/ingress.sh"
+    environment = {
+      FOLDER    = local.folder
+      NAMESPACE = var.namespace
     }
   }
 
@@ -152,7 +172,7 @@ resource "null_resource" "is-concourse-ready" {
 
 # Configure Route53...
 module "route53" {
-
+  
   source = "../terraform-aws-kubernetes-cluster/modules/route53"
 
   domain = var.domain

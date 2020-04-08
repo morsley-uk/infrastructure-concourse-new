@@ -34,8 +34,6 @@ kubectl apply --filename ${FOLDER}/postgresql-persistent-volume-0.yaml
 
 helm repo add concourse https://concourse-charts.storage.googleapis.com/
 
-#helm repo update
-
 kubectl create namespace ${NAMESPACE}
 
 kubectl label namespace ${NAMESPACE} istio-injection=enabled
@@ -43,10 +41,6 @@ kubectl label namespace ${NAMESPACE} istio-injection=enabled
 helm install ${DEPLOYMENT_NAME} concourse/concourse \
   --values $(pwd)/k8s/concourse-values.yaml \
   --namespace ${NAMESPACE}
-
-kubectl apply --filename $(pwd)/k8s/concourse-ingress.yaml
-
-#kubectl --namespace ${NAMESPACE} rollout status ${NAME}
 
 # https://whynopadlock.com
 # https://www.ssllabs.com/ssltest/

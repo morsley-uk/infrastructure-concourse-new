@@ -17,7 +17,7 @@ echo '##########################################################################
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
-CONCOURSE_NAMESPACE=concourse
+CONCOURSE_NAMESPACE=${NAMESPACE}
 
 # Requires:
 # - kubectl

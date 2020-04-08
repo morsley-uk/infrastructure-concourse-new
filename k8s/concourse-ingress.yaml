@@ -4,9 +4,10 @@ metadata:
   name: concourse-ingress
 spec:
   rules:
-    - host: concourse.morsley.io
-      http:
-        paths:
-          - backend:
-              serviceName: concourse-web.concourse.svc.cluster.local
-              servicePort: 8080
+  - host: concourse.morsley.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: concourse-web
+          servicePort: 8080
