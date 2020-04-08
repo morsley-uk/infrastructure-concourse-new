@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 
 #    _____           _        _ _    _____                                          
 #   |_   _|         | |      | | |  / ____|                                         

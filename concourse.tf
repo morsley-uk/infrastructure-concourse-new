@@ -170,6 +170,44 @@ resource "null_resource" "concourse-ingress" {
 
 }
 
+# Using Helm install Cert-Manager...
+resource "null_resource" "install-cert-manager" {
+
+  depends_on = [
+    null_resource.is-concourse-ready
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "chmod +x ${path.module}/scripts/install_cert_manager.sh && bash ${path.module}/scripts/install_cert_manager.sh"
+    environment = {
+      FOLDER          = local.folder
+      NAMESPACE       = "cert-manager"
+    }
+  }
+
+}
+
+# Is Cert-Manager ready...?
+resource "null_resource" "is-cert-manager-ready" {
+
+  depends_on = [
+    null_resource.install-cert-manager
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "chmod +x scripts/is_cert_manager_ready.sh && bash scripts/is_cert_manager_ready.sh"
+    environment = {
+      FOLDER    = local.folder
+      NAMESPACE = "cert-manager"
+    }
+  }
+
+}
+
 # Configure Route53...
 module "route53" {
   
