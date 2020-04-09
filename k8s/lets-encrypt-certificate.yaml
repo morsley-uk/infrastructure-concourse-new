@@ -1,0 +1,15 @@
+﻿apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: concourse-morsley-io-lets-encrypt-staging
+spec:
+  secretName: concourse-morsley-io-lets-encrypt-staging-tls
+  issuerRef:
+    name: lets-encrypt-staging
+  commonName: concourse.morsley.io
+  acme: 
+    config:
+      - http01:
+          ingress: concourse-ingress
+        domains:
+          - concourse.morsley.io

@@ -8,7 +8,7 @@
 #   |_____|_| |_|___/\__\__,_|_|_|  \_____\___/|_| |_|\___\___/ \__,_|_|  |___/\___|
 #                                                                                 
                                                                         
-# Install Pivotal Concourse via Helm
+# Install Concourse via Helm
  
 echo '###############################################################################'
 echo '# INSTALL CONCOURSE...'
@@ -41,11 +41,6 @@ kubectl label namespace ${NAMESPACE} istio-injection=enabled
 helm install ${DEPLOYMENT_NAME} concourse/concourse \
   --values $(pwd)/k8s/concourse-values.yaml \
   --namespace ${NAMESPACE}
-
-# https://whynopadlock.com
-# https://www.ssllabs.com/ssltest/
-
-# https://rancher.com/docs/rancher/v2.x/en/installation/options/troubleshooting/
 
 #set +x
 

@@ -1,0 +1,23 @@
+﻿apiVersion: certmanager.k8.io/v1alpha1
+kind: Issuer
+metadata:
+  name: lets-encrypt
+spec:
+  acme:    
+    server: https://acme-01.api.letsencypt.org/directory
+    email: admin@morsley.uk
+    privateKeySecretRef:
+      name: lets-encrypt
+    http01: {}
+---
+apiVersion: certmanager.k8.io/v1alpha1
+kind: Issuer
+metadata:
+  name: lets-encrypt-staging
+spec:
+  acme:
+    server: https://acme-staging.api.letsencypt.org/directory
+    email: admin@morsley.uk
+    privateKeySecretRef:
+      name: lets-encrypt-staging
+    http01: {}
