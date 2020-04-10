@@ -1,0 +1,13 @@
+resource "null_resource" "test" {
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "chmod +x scripts/test.sh && bash scripts/test.sh"
+    environment = {
+      FOLDER = "TEST1"
+      NAMESPACE = "TEST2"
+    }
+  }
+
+}

@@ -161,7 +161,7 @@ resource "null_resource" "concourse-ingress" {
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
-    command = "chmod +x scripts/concourse-ingress.sh && bash scripts/concourse-ingress.sh"
+    command = "chmod +x scripts/concourse_ingress.sh && bash scripts/concourse_ingress.sh"
     environment = {
       FOLDER    = local.folder
       NAMESPACE = var.namespace

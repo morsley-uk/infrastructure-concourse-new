@@ -101,11 +101,11 @@ are_deployments_ready () {
       is_ready="No"  
     fi
       
-    done
+  done
     
-    #print_deployment_headers
+  #print_deployment_headers
     
-  echo "${is_ready}"
+  #echo "${is_ready}"
   
   if [ "$is_ready" == "Yes" ]; then
     return 1
@@ -145,7 +145,7 @@ while true; do
         break
     fi
 
-    sleep 5
+    sleep 10
 
 done
 
