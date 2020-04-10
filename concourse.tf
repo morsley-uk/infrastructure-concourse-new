@@ -31,90 +31,90 @@ module "kubernetes-cluster" {
 }
 
 # Concourse needs 2 AWS EBS...
-//resource "aws_ebs_volume" "worker-ebs" {
-//
-//  availability_zone = var.availability_zone
-//  size              = var.worker_storage_size
-//
-//  tags = {
-//    Name = "worker-storage-ebs"
-//  }
-//
-//}
-//
-//resource "local_file" "worker-persistent-volume-0-yaml" {
-//
-//  content  = templatefile("${path.cwd}/k8s/worker-persistent-volume-0.yaml", { VOLUME_ID = aws_ebs_volume.worker-ebs.id })
-//  filename = "${local.folder}/worker-persistent-volume-0.yaml"
-//
-//}
-//
-//resource "local_file" "worker-persistent-volume-1-yaml" {
-//
-//  content  = templatefile("${path.cwd}/k8s/worker-persistent-volume-1.yaml", { VOLUME_ID = aws_ebs_volume.worker-ebs.id })
-//  filename = "${local.folder}/worker-persistent-volume-1.yaml"
-//
-//}
-//
-//resource "aws_ebs_volume" "postgresql-ebs" {
-//
-//  availability_zone = var.availability_zone
-//  size              = var.postgresql_storage_size
-//
-//  tags = {
-//    Name = "postgresql-storage-ebs"
-//  }
-//
-//}
-//
-//resource "local_file" "postgresql-persistent-volume-0-yaml" {
-//
-//  content  = templatefile("${path.cwd}/k8s/postgresql-persistent-volume-0.yaml", { VOLUME_ID = aws_ebs_volume.postgresql-ebs.id })
-//  filename = "${local.folder}/postgresql-persistent-volume-0.yaml"
-//
-//}
+resource "aws_ebs_volume" "worker-ebs" {
+
+  availability_zone = var.availability_zone
+  size              = var.worker_storage_size
+
+  tags = {
+    Name = "worker-storage-ebs"
+  }
+
+}
+
+resource "local_file" "worker-persistent-volume-0-yaml" {
+
+  content  = templatefile("${path.cwd}/k8s/worker-persistent-volume-0.yaml", { VOLUME_ID = aws_ebs_volume.worker-ebs.id })
+  filename = "${local.folder}/worker-persistent-volume-0.yaml"
+
+}
+
+resource "local_file" "worker-persistent-volume-1-yaml" {
+
+  content  = templatefile("${path.cwd}/k8s/worker-persistent-volume-1.yaml", { VOLUME_ID = aws_ebs_volume.worker-ebs.id })
+  filename = "${local.folder}/worker-persistent-volume-1.yaml"
+
+}
+
+resource "aws_ebs_volume" "postgresql-ebs" {
+
+  availability_zone = var.availability_zone
+  size              = var.postgresql_storage_size
+
+  tags = {
+    Name = "postgresql-storage-ebs"
+  }
+
+}
+
+resource "local_file" "postgresql-persistent-volume-0-yaml" {
+
+  content  = templatefile("${path.cwd}/k8s/postgresql-persistent-volume-0.yaml", { VOLUME_ID = aws_ebs_volume.postgresql-ebs.id })
+  filename = "${local.folder}/postgresql-persistent-volume-0.yaml"
+
+}
 
 # Using Helm install Concourse on the previously created Kubernetes cluster...
-//resource "null_resource" "install-concourse" {
-//
-//  depends_on = [
-//    aws_ebs_volume.worker-ebs,
-//    aws_ebs_volume.postgresql-ebs,
-//    module.kubernetes-cluster #,
-//    #null_resource.is-istio-ready
-//  ]
-//
-//  # https://www.terraform.io/docs/provisioners/local-exec.html
-//
-//  provisioner "local-exec" {
-//    command = "chmod +x ${path.module}/scripts/install_concourse.sh && bash ${path.module}/scripts/install_concourse.sh"
-//    environment = {
-//      FOLDER          = local.folder
-//      DEPLOYMENT_NAME = var.deployment_name
-//      NAMESPACE       = var.namespace
-//    }
-//  }
-//
-//}
+resource "null_resource" "install-concourse" {
+
+  depends_on = [
+    aws_ebs_volume.worker-ebs,
+    aws_ebs_volume.postgresql-ebs,
+    module.kubernetes-cluster #,
+    #null_resource.is-istio-ready
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "chmod +x ${path.module}/scripts/install_concourse.sh && bash ${path.module}/scripts/install_concourse.sh"
+    environment = {
+      FOLDER          = local.folder
+      DEPLOYMENT_NAME = var.deployment_name
+      NAMESPACE       = var.namespace
+    }
+  }
+
+}
 
 # Is Concourse ready...?
-//resource "null_resource" "is-concourse-ready" {
-//
-//  depends_on = [
-//    null_resource.install-concourse
-//  ]
-//
-//  # https://www.terraform.io/docs/provisioners/local-exec.html
-//
-//  provisioner "local-exec" {
-//    command = "chmod +x scripts/is_concourse_ready.sh && bash scripts/is_concourse_ready.sh"
-//    environment = {
-//      FOLDER    = local.folder
-//      NAMESPACE = var.namespace
-//    }
-//  }
-//
-//}
+resource "null_resource" "is-concourse-ready" {
+
+  depends_on = [
+    null_resource.install-concourse
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "chmod +x scripts/is_concourse_ready.sh && bash scripts/is_concourse_ready.sh"
+    environment = {
+      FOLDER    = local.folder
+      NAMESPACE = var.namespace
+    }
+  }
+
+}
 
 # Ingress...
 //resource "null_resource" "concourse-ingress" {
