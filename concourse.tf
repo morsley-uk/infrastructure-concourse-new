@@ -87,7 +87,7 @@ resource "null_resource" "install-concourse" {
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
-    command = "chmod +x ${path.module}/scripts/install_concourse.sh && bash ${path.module}/scripts/install_concourse.sh"
+    command = "chmod +x bash ${path.module}/scripts/install_concourse.sh"
     environment = {
       FOLDER          = local.folder
       DEPLOYMENT_NAME = var.deployment_name
@@ -107,7 +107,7 @@ resource "null_resource" "is-concourse-ready" {
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
-    command = "chmod +x scripts/is_concourse_ready.sh && bash scripts/is_concourse_ready.sh"
+    command = "bash ${path.module}/scripts/is_concourse_ready.sh"
     environment = {
       FOLDER    = local.folder
       NAMESPACE = var.namespace
