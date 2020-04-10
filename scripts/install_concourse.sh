@@ -50,6 +50,6 @@ helm install ${DEPLOYMENT_NAME} concourse/concourse \
 #echo '# CONCOURSE INSTALLED'
 #echo '###############################################################################'
 
-bash ../common-kubernetes/scripts/header.sh "CONCOURSE INSTALLED"
+bash ../common-kubernetes/scripts/footer.sh "CONCOURSE INSTALLED"
 
 exit 0
