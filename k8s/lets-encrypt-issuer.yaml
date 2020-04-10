@@ -1,4 +1,4 @@
-apiVersion: certmanager.io/v1alpha1
+apiVersion: cert-manager.io/v1alpha3
 kind: Issuer
 metadata:
   name: lets-encrypt
@@ -10,7 +10,7 @@ spec:
       name: lets-encrypt
     http01: {}
 ---
-apiVersion: certmanager.k8s.io/v1alpha1
+apiVersion: cert-manager.io/v1alpha3
 kind: Issuer
 metadata:
   name: lets-encrypt-staging
