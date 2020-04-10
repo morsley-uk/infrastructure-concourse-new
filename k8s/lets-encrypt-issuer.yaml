@@ -1,4 +1,4 @@
-﻿apiVersion: certmanager.k8.io/v1alpha1
+apiVersion: certmanager.k8.io/v1alpha1
 kind: Issuer
 metadata:
   name: lets-encrypt
