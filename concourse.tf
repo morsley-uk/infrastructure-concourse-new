@@ -87,7 +87,7 @@ resource "null_resource" "install-concourse" {
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
-    command = "chmod +x bash ${path.module}/scripts/install_concourse.sh"
+    command = "bash ${path.module}/scripts/install_concourse.sh"
     environment = {
       FOLDER          = local.folder
       DEPLOYMENT_NAME = var.deployment_name
