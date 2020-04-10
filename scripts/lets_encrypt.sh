@@ -29,11 +29,15 @@ echo "pwd: " $(pwd)
 
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
+# https://cert-manager.readthedocs.io/en/latest/reference/issuers.html
+
 kubectl apply --filename $(pwd)/k8s/lets-encrypt-issuer.yaml --namespace ${NAMESPACE}
 
 # To check if this has worked:
 # kubectl get issuers --namespace ${NAMESPACE}
 # kubectl describe issuer [ISSUER NAME] --namespace ${NAMESPACE}
+
+# https://cert-manager.readthedocs.io/en/latest/reference/issuers.html
 
 kubectl apply --filename $(pwd)/k8s/lets-encrypt-certificate.yaml --namespace ${NAMESPACE}
 
