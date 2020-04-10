@@ -9,9 +9,9 @@
 #                                                   __/ | |        
 #                                                  |___/|_|        
 
-echo '###############################################################################'
-echo "# LET'S ENCRYPT..."
-echo '###############################################################################'
+# GENERATE SSL/TLS CERTIFICATES WITH LET'S ENCRYPT.
+
+bash ../common-kubernetes/scripts/header.sh "SETTING UP LET'S ENCRYPT..."
 
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
@@ -34,6 +34,4 @@ kubectl apply --filename lets-encrypt-certificate.yaml --namespace ${NAMESPACE}
 # https://whynopadlock.com
 # https://www.ssllabs.com/ssltest/
 
-echo '###############################################################################'
-echo "# FINISHED LET'S ENCRYPT."
-echo '###############################################################################'
+bash ../common-kubernetes/scripts/footer.sh "LET'S ENCRYPT HAS BEEN SET UP"

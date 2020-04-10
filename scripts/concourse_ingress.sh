@@ -9,8 +9,6 @@
 #                __/ |                  
 #               |___/                   
                                                                                
-#set -x    
-
 bash ../common-kubernetes/scripts/header.sh "ADD INGRESS..."
 
 echo "pwd: " $(pwd)

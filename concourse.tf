@@ -135,11 +135,12 @@ resource "null_resource" "concourse-ingress" {
 
 }
 
-# Using Helm install Cert-Manager...
+# Install Cert-Manager...
 resource "null_resource" "install-cert-manager" {
 
   depends_on = [
-    null_resource.is-concourse-ready
+    null_resource.is-concourse-ready,
+    null_resource.concourse-ingress
   ]
 
   # https://www.terraform.io/docs/provisioners/local-exec.html
@@ -168,6 +169,45 @@ resource "null_resource" "is-cert-manager-ready" {
     environment = {
       FOLDER    = local.folder
       NAMESPACE = "cert-manager"
+    }
+  }
+
+}
+
+# Let's Encrypt...
+resource "null_resource" "lets-encrypt" {
+
+  depends_on = [
+    null_resource.is-cert-manager-ready,
+    null_resource.concourse-ingress
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "bash ${path.module}/scripts/install_lets_encrypt.sh"
+    environment = {
+      FOLDER    = local.folder
+      NAMESPACE = var.namespace
+    }
+  }
+
+}
+
+# Is Let's Encrypt ready...?
+resource "null_resource" "is-lets-encrypt-ready" {
+
+  depends_on = [
+    null_resource.lets-encrypt
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "bash ${path.module}/scripts/is_lets_encrypt_ready.sh"
+    environment = {
+      FOLDER    = local.folder
+      NAMESPACE = var.namespace
     }
   }
 
