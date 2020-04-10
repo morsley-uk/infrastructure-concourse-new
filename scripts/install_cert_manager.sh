@@ -9,11 +9,7 @@
 #                                                                                        __/ |          
 #                                                                                       |___/                                                        
 
-echo '###############################################################################'
-echo '# INSTALL CERT-MANAGER...'
-echo '###############################################################################'
-
-#set -x
+bash ../common-kubernetes/scripts/header.sh "INSTALL CERT-MANAGER..."
 
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
@@ -23,20 +19,12 @@ kubectl create namespace cert-manager
 
 helm repo add jetstack https://charts.jetstack.io
 
-#helm repo update
+helm repo update
 
 helm install cert-manager jetstack/cert-manager \
   --version v0.14.2 \
-  --namespace cert-manager \
-  --wait
+  --namespace cert-manager
 
-kubectl get all --namespace cert-manager
-
-   
-echo '###############################################################################'
-echo '# CERT-MANAGER INSTALLED'
-echo '###############################################################################'
-
-#set +x
+bash ../common-kubernetes/scripts/footer.sh "CERT-MANAGER INSTALLED"
 
 exit 0

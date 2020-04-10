@@ -117,69 +117,69 @@ resource "null_resource" "is-concourse-ready" {
 }
 
 # Ingress...
-//resource "null_resource" "concourse-ingress" {
-//
-//  depends_on = [
-//    null_resource.is-concourse-ready
-//  ]
-//
-//  # https://www.terraform.io/docs/provisioners/local-exec.html
-//
-//  provisioner "local-exec" {
-//    command = "chmod +x scripts/concourse_ingress.sh && bash scripts/concourse_ingress.sh"
-//    environment = {
-//      FOLDER    = local.folder
-//      NAMESPACE = var.namespace
-//    }
-//  }
-//
-//}
+resource "null_resource" "concourse-ingress" {
+
+  depends_on = [
+    null_resource.is-concourse-ready
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "bash ${path.module}/scripts/concourse_ingress.sh"
+    environment = {
+      FOLDER    = local.folder
+      NAMESPACE = var.namespace
+    }
+  }
+
+}
 
 # Using Helm install Cert-Manager...
-//resource "null_resource" "install-cert-manager" {
-//
-//  depends_on = [
-//    null_resource.is-concourse-ready
-//  ]
-//
-//  # https://www.terraform.io/docs/provisioners/local-exec.html
-//
-//  provisioner "local-exec" {
-//    command = "chmod +x ${path.module}/scripts/install_cert_manager.sh && bash ${path.module}/scripts/install_cert_manager.sh"
-//    environment = {
-//      FOLDER    = local.folder
-//      NAMESPACE = "cert-manager"
-//    }
-//  }
-//
-//}
+resource "null_resource" "install-cert-manager" {
+
+  depends_on = [
+    null_resource.is-concourse-ready
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "bash ${path.module}/scripts/install_cert_manager.sh"
+    environment = {
+      FOLDER    = local.folder
+      NAMESPACE = "cert-manager"
+    }
+  }
+
+}
 
 # Is Cert-Manager ready...?
-//resource "null_resource" "is-cert-manager-ready" {
-//
-//  depends_on = [
-//    null_resource.install-cert-manager
-//  ]
-//
-//  # https://www.terraform.io/docs/provisioners/local-exec.html
-//
-//  provisioner "local-exec" {
-//    command = "chmod +x scripts/is_cert_manager_ready.sh && bash scripts/is_cert_manager_ready.sh"
-//    environment = {
-//      FOLDER    = local.folder
-//      NAMESPACE = "cert-manager"
-//    }
-//  }
-//
-//}
+resource "null_resource" "is-cert-manager-ready" {
+
+  depends_on = [
+    null_resource.install-cert-manager
+  ]
+
+  # https://www.terraform.io/docs/provisioners/local-exec.html
+
+  provisioner "local-exec" {
+    command = "bash ${path.module}/scripts/is_cert_manager_ready.sh"
+    environment = {
+      FOLDER    = local.folder
+      NAMESPACE = "cert-manager"
+    }
+  }
+
+}
 
 # Configure Route53...
-//module "route53" {
-//
-//  source = "../terraform-aws-kubernetes-cluster/modules/route53"
-//
-//  domain    = var.domain
-//  subdomain = var.subdomain
-//  public_ip = module.kubernetes-cluster.public_ip
-//
-//}
+module "route53" {
+
+  source = "../terraform-aws-kubernetes-cluster/modules/route53"
+
+  domain    = var.domain
+  subdomain = var.subdomain
+  public_ip = module.kubernetes-cluster.public_ip
+
+}

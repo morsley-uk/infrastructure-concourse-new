@@ -8,12 +8,10 @@
 #   |_____|_| |_|\__, |_|  \___||___/___/
 #                __/ |                  
 #               |___/                   
-                                                                         
-echo '###############################################################################'
-echo '# INGRESS...'
-echo '###############################################################################'
-      
+                                                                               
 #set -x    
+
+bash ../common-kubernetes/scripts/header.sh "ADD INGRESS..."
 
 echo "pwd: " $(pwd)
                                         
@@ -23,8 +21,6 @@ kubectl apply --filename $(pwd)/k8s/concourse-ingress.yaml --namespace ${NAMESPA
 
 #set +x
 
-echo '###############################################################################'
-echo '# INGRESS'
-echo '###############################################################################'
+bash ../common-kubernetes/scripts/footer.sh "INGRESS ADDED"
 
 exit 0

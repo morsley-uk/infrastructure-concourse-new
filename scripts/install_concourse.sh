@@ -10,14 +10,8 @@
                                                                         
 # Install Concourse via Helm
  
-#echo '###############################################################################'
-#echo '# INSTALL CONCOURSE...'
-#echo '###############################################################################'
-
 bash ../common-kubernetes/scripts/header.sh "INSTALL CONCOURSE..."
       
-#set -x    
-
 echo "pwd: " $(pwd)
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
@@ -25,8 +19,6 @@ export KUBECONFIG=${FOLDER}/kube_config.yaml
 chmod 400 ${FOLDER}/*.pem
 chmod 400 ${FOLDER}/*.pub
   
-# Concourse...
-
 kubectl apply --filename $(pwd)/k8s/worker-storage-class.yaml
 kubectl apply --filename ${FOLDER}/worker-persistent-volume-0.yaml
 kubectl apply --filename ${FOLDER}/worker-persistent-volume-1.yaml
@@ -43,12 +35,6 @@ kubectl label namespace ${NAMESPACE} istio-injection=enabled
 helm install ${DEPLOYMENT_NAME} concourse/concourse \
   --values $(pwd)/k8s/concourse-values.yaml \
   --namespace ${NAMESPACE}
-
-#set +x
-
-#echo '###############################################################################'
-#echo '# CONCOURSE INSTALLED'
-#echo '###############################################################################'
 
 bash ../common-kubernetes/scripts/footer.sh "CONCOURSE INSTALLED"
 
