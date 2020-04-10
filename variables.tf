@@ -24,6 +24,10 @@ variable "namespace" {
   default = "concourse"
 }
 
+variable "cert_manager_namespace" {
+  default = "cert-manager"
+}
+
 variable "deployment_name" {
   default = "concourse"
 }

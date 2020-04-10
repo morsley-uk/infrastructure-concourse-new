@@ -89,7 +89,7 @@ resource "null_resource" "install-concourse" {
   provisioner "local-exec" {
     command = "bash ${path.module}/scripts/install_concourse.sh"
     environment = {
-      FOLDER          = local.folder
+      FOLDER          = "${path.cwd}/${local.folder}"
       DEPLOYMENT_NAME = var.deployment_name
       NAMESPACE       = var.namespace
     }
@@ -109,7 +109,7 @@ resource "null_resource" "is-concourse-ready" {
   provisioner "local-exec" {
     command = "bash ${path.module}/scripts/is_concourse_ready.sh"
     environment = {
-      FOLDER    = local.folder
+      FOLDER    = "${path.cwd}/${local.folder}"
       NAMESPACE = var.namespace
     }
   }
@@ -128,7 +128,7 @@ resource "null_resource" "concourse-ingress" {
   provisioner "local-exec" {
     command = "bash ${path.module}/scripts/concourse_ingress.sh"
     environment = {
-      FOLDER    = local.folder
+      FOLDER    = "${path.cwd}/${local.folder}"
       NAMESPACE = var.namespace
     }
   }
@@ -148,8 +148,8 @@ resource "null_resource" "install-cert-manager" {
   provisioner "local-exec" {
     command = "bash ${path.module}/scripts/install_cert_manager.sh"
     environment = {
-      FOLDER    = local.folder
-      NAMESPACE = "cert-manager"
+      FOLDER    = "${path.cwd}/${local.folder}"
+      NAMESPACE = var.cert_manager_namespace
     }
   }
 
@@ -167,8 +167,8 @@ resource "null_resource" "is-cert-manager-ready" {
   provisioner "local-exec" {
     command = "bash ${path.module}/scripts/is_cert_manager_ready.sh"
     environment = {
-      FOLDER    = local.folder
-      NAMESPACE = "cert-manager"
+      FOLDER    = "${path.cwd}/${local.folder}"
+      NAMESPACE = var.cert_manager_namespace
     }
   }
 
@@ -187,7 +187,7 @@ resource "null_resource" "lets-encrypt" {
   provisioner "local-exec" {
     command = "bash ${path.module}/scripts/lets_encrypt.sh"
     environment = {
-      FOLDER    = local.folder
+      FOLDER    = "${path.cwd}/${local.folder}"
       NAMESPACE = var.namespace
     }
   }
@@ -206,7 +206,7 @@ resource "null_resource" "is-lets-encrypt-ready" {
   provisioner "local-exec" {
     command = "bash ${path.module}/scripts/is_lets_encrypt_ready.sh"
     environment = {
-      FOLDER    = local.folder
+      FOLDER    = "${path.cwd}/${local.folder}"
       NAMESPACE = var.namespace
     }
   }

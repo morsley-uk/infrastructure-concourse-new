@@ -13,15 +13,29 @@
 
 bash ../common-kubernetes/scripts/header.sh "SETTING UP LET'S ENCRYPT..."
 
+if [[ -z "${FOLDER}" ]]; then   
+    echo "No FOLDER supplied."
+    exit 666
+fi
+echo "FOLDER:" ${FOLDER}
+
+if [[ -z "${NAMESPACE}" ]]; then   
+    echo "No NAMESPACE supplied."
+    exit 666
+fi
+echo "NAMESPACE:" ${NAMESPACE}
+
+echo "pwd: " $(pwd)
+
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
-kubectl apply --filename lets-encrypt-issuer.yaml --namespace ${NAMESPACE}
+kubectl apply --filename $(pwd)/k8s/lets-encrypt-issuer.yaml --namespace ${NAMESPACE}
 
 # To check if this has worked:
 # kubectl get issuers --namespace ${NAMESPACE}
 # kubectl describe issuer [ISSUER NAME] --namespace ${NAMESPACE}
 
-kubectl apply --filename lets-encrypt-certificate.yaml --namespace ${NAMESPACE}
+kubectl apply --filename $(pwd)/k8s/lets-encrypt-certificate.yaml --namespace ${NAMESPACE}
 
 # To check if this has worked:
 # kubectl get certificates --namespace ${NAMESPACE}

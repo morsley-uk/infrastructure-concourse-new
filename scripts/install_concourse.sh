@@ -12,7 +12,25 @@
  
 bash ../common-kubernetes/scripts/header.sh "INSTALL CONCOURSE..."
       
-echo "pwd: " $(pwd)
+if [[ -z "${FOLDER}" ]]; then   
+    echo "No FOLDER supplied."
+    exit 666
+fi
+echo "FOLDER:" ${FOLDER}
+
+if [[ -z "${NAMESPACE}" ]]; then   
+    echo "No NAMESPACE supplied."
+    exit 666
+fi
+echo "NAMESPACE:" ${NAMESPACE}
+
+if [[ -z "${DEPLOYMENT_NAME}" ]]; then   
+    echo "No DEPLOYMENT_NAME supplied."
+    exit 666
+fi
+echo "DEPLOYMENT_NAME: " ${DEPLOYMENT_NAME}
+
+echo "pwd:" $(pwd)
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 

@@ -11,13 +11,23 @@
                                                                                
 bash ../common-kubernetes/scripts/header.sh "ADD INGRESS..."
 
-echo "pwd: " $(pwd)
+if [[ -z "${FOLDER}" ]]; then   
+    echo "No FOLDER supplied."
+    exit 666
+fi
+echo "FOLDER:" ${FOLDER}
+
+if [[ -z "${NAMESPACE}" ]]; then   
+    echo "No NAMESPACE supplied."
+    exit 666
+fi
+echo "NAMESPACE:" ${NAMESPACE}
+
+echo "pwd:" $(pwd)
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
 kubectl apply --filename $(pwd)/k8s/concourse-ingress.yaml --namespace ${NAMESPACE}
-
-#set +x
 
 bash ../common-kubernetes/scripts/footer.sh "INGRESS ADDED"
 

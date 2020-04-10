@@ -11,11 +11,23 @@
 
 bash ../common-kubernetes/scripts/header.sh "INSTALL CERT-MANAGER..."
 
+if [[ -z "${FOLDER}" ]]; then   
+    echo "No FOLDER supplied."
+    exit 666
+fi
+echo "FOLDER:" ${FOLDER}
+
+if [[ -z "${NAMESPACE}" ]]; then   
+    echo "No NAMESPACE supplied."
+    exit 666
+fi
+echo "NAMESPACE:" ${NAMESPACE}
+
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
 kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.14/deploy/manifests/00-crds.yaml
 
-kubectl create namespace cert-manager
+kubectl create namespace ${NAMESPACE}
 
 helm repo add jetstack https://charts.jetstack.io
 
@@ -23,7 +35,7 @@ helm repo update
 
 helm install cert-manager jetstack/cert-manager \
   --version v0.14.2 \
-  --namespace cert-manager
+  --namespace ${NAMESPACE}
 
 bash ../common-kubernetes/scripts/footer.sh "CERT-MANAGER INSTALLED"
 

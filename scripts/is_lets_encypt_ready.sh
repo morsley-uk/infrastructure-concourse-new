@@ -11,7 +11,17 @@
 
 bash ../common-kubernetes/scripts/header.sh "IS LET'S ENCRYPT...?"
 
+if [[ -z "${FOLDER}" ]]; then   
+    echo "No FOLDER supplied."
+    exit 666
+fi
+echo "FOLDER:" ${FOLDER}
+
 export KUBECONFIG=${FOLDER}/kube_config.yaml
+
+echo "pwd:" $(pwd)
+
+kubectl get all --all-namespaces
 
 #
 #
