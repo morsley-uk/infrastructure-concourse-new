@@ -185,7 +185,7 @@ resource "null_resource" "lets-encrypt" {
   # https://www.terraform.io/docs/provisioners/local-exec.html
 
   provisioner "local-exec" {
-    command = "bash ${path.module}/scripts/install_lets_encrypt.sh"
+    command = "bash ${path.module}/scripts/lets_encrypt.sh"
     environment = {
       FOLDER    = local.folder
       NAMESPACE = var.namespace
