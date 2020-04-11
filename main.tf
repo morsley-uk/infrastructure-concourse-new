@@ -95,7 +95,7 @@ resource "random_password" "admin-password" {
 
 resource "aws_s3_bucket_object" "admin-password-txt" {
 
-  bucket  = local.bucket_name
+  bucket  = module.kubernetes-cluster.bucket_name
   key     = "/${var.cluster_name}/admin_password.txt"
   content = random_password.admin-password.result
   content_type = "text/*"
