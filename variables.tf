@@ -11,7 +11,6 @@ variable "availability_zone" {
 variable "domain" {
   default = "morsley.io"
 }
-
 variable "subdomain" {
   default = "concourse"
 }

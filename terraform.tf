@@ -16,4 +16,12 @@ terraform {
     }
   }
 
+  //  backend "s3" {
+  //    bucket         = "morsley-io-terraform"
+  //    key            = "infrastructure-concourse"
+  //    region         = "eu-west-2"
+  //    dynamodb_table = "morsley-io-tfstatelock-concourse"
+  //    encrypt        = true
+  //  }
+
 }
