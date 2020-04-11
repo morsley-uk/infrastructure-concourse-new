@@ -10,8 +10,7 @@
                                                                         
 # Install Concourse via Helm
 
-DIRECTORY="$(dirname "$0")"    
-COMMON=${DIRECTORY}/../common-kubernetes/scripts  
+COMMON=$(pwd)/../common-kubernetes/scripts  
  
 bash ${COMMON}/header.sh "INSTALL CONCOURSE..."
       
@@ -40,9 +39,6 @@ echo "pwd:" $(pwd)
 bash ${COMMON}/print_divider.sh
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
-
-#chmod 400 ${FOLDER}/*.pem
-#chmod 400 ${FOLDER}/*.pub
   
 kubectl apply --filename $(pwd)/k8s/worker-storage-class.yaml
 kubectl apply --filename ${FOLDER}/worker-persistent-volume-0.yaml
@@ -54,8 +50,6 @@ kubectl apply --filename ${FOLDER}/postgresql-persistent-volume-0.yaml
 helm repo add concourse https://concourse-charts.storage.googleapis.com/
 
 kubectl create namespace ${NAMESPACE}
-
-kubectl label namespace ${NAMESPACE} istio-injection=enabled
 
 helm install ${DEPLOYMENT_NAME} concourse/concourse \
   --values $(pwd)/k8s/concourse-values.yaml \

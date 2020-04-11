@@ -11,8 +11,7 @@
 
 # GENERATE SSL/TLS CERTIFICATES WITH LET'S ENCRYPT.
 
-DIRECTORY="$(dirname "$0")"
-COMMON=${DIRECTORY}/../common-kubernetes/scripts
+COMMON=$(pwd)/../common-kubernetes/scripts
 
 bash ${COMMON}/header.sh "SETTING UP LET'S ENCRYPT..."
 

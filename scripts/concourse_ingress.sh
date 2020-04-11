@@ -9,8 +9,7 @@
 #                __/ |                  
 #               |___/                   
                                                                                
-DIRECTORY="$(dirname "$0")"
-COMMON=${DIRECTORY}/../common-kubernetes/scripts
+COMMON=$(pwd)/../common-kubernetes/scripts
 
 bash ${COMMON}/header.sh "ADD INGRESS..."
 

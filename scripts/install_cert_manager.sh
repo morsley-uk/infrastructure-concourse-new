@@ -9,8 +9,7 @@
 #                                                                                        __/ |          
 #                                                                                       |___/                                                        
 
-DIRECTORY="$(dirname "$0")"
-COMMON=${DIRECTORY}/../common-kubernetes/scripts
+COMMON=$(pwd)/../common-kubernetes/scripts
 
 bash ${COMMON}/header.sh "INSTALL CERT-MANAGER..."
 
@@ -43,7 +42,7 @@ helm repo update
 helm install cert-manager jetstack/cert-manager \
   --version v0.12.0 \
   --set ingressShim.defaultIssuerName=lets-encrypt-test \
-  --set ingressShim.defaultIssuerKind=Issuer \  
+  --set ingressShim.defaultIssuerKind=Issuer \
   --namespace ${NAMESPACE}
 
 bash ${COMMON}/footer.sh "CERT-MANAGER INSTALLED"
