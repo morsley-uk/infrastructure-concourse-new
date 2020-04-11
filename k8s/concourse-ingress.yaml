@@ -10,7 +10,7 @@ spec:
   tls:
   - hosts:
     - concourse.morsley.io
-    secretName: tls-rancher-ingress
+    secretName: tls-concourse-ingress
   rules:
   - host: concourse.morsley.io
     http:
