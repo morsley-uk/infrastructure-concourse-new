@@ -9,8 +9,13 @@
 #                                                                                 
                                                                         
 # Install Concourse via Helm
+
+DIRECTORY="$(dirname "$0")"    
+COMMON=${DIRECTORY}/../common-kubernetes/scripts  
  
-bash ../common-kubernetes/scripts/header.sh "INSTALL CONCOURSE..."
+bash ${COMMON}/header.sh "INSTALL CONCOURSE..."
+      
+bash ${COMMON}/print_divider.sh
       
 if [[ -z "${FOLDER}" ]]; then   
     echo "No FOLDER supplied."
@@ -31,6 +36,8 @@ fi
 echo "DEPLOYMENT_NAME: " ${DEPLOYMENT_NAME}
 
 echo "pwd:" $(pwd)
+
+bash ${COMMON}/print_divider.sh
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
@@ -54,6 +61,6 @@ helm install ${DEPLOYMENT_NAME} concourse/concourse \
   --values $(pwd)/k8s/concourse-values.yaml \
   --namespace ${NAMESPACE}
 
-bash ../common-kubernetes/scripts/footer.sh "CONCOURSE INSTALLED"
+bash ${COMMON}/footer.sh "CONCOURSE INSTALLED"
 
 exit 0

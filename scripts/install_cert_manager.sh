@@ -9,7 +9,12 @@
 #                                                                                        __/ |          
 #                                                                                       |___/                                                        
 
-bash ../common-kubernetes/scripts/header.sh "INSTALL CERT-MANAGER..."
+DIRECTORY="$(dirname "$0")"
+COMMON=${DIRECTORY}/../common-kubernetes/scripts
+
+bash ${COMMON}/header.sh "INSTALL CERT-MANAGER..."
+
+bash ${COMMON}/print_divider.sh
 
 if [[ -z "${FOLDER}" ]]; then   
     echo "No FOLDER supplied."
@@ -22,6 +27,8 @@ if [[ -z "${NAMESPACE}" ]]; then
     exit 666
 fi
 echo "NAMESPACE:" ${NAMESPACE}
+
+bash ${COMMON}/print_divider.sh
 
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
@@ -39,6 +46,6 @@ helm install cert-manager jetstack/cert-manager \
   --set ingressShim.defaultIssuerKind=Issuer \  
   --namespace ${NAMESPACE}
 
-bash ../common-kubernetes/scripts/footer.sh "CERT-MANAGER INSTALLED"
+bash ${COMMON}/footer.sh "CERT-MANAGER INSTALLED"
 
 exit 0

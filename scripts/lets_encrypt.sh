@@ -11,7 +11,12 @@
 
 # GENERATE SSL/TLS CERTIFICATES WITH LET'S ENCRYPT.
 
-bash ../common-kubernetes/scripts/header.sh "SETTING UP LET'S ENCRYPT..."
+DIRECTORY="$(dirname "$0")"
+COMMON=${DIRECTORY}/../common-kubernetes/scripts
+
+bash ${COMMON}/header.sh "SETTING UP LET'S ENCRYPT..."
+
+bash ${COMMON}/print_divider.sh
 
 if [[ -z "${FOLDER}" ]]; then   
     echo "No FOLDER supplied."
@@ -26,6 +31,8 @@ fi
 echo "NAMESPACE:" ${NAMESPACE}
 
 echo "pwd: " $(pwd)
+
+bash ${COMMON}/print_divider.sh
 
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
@@ -52,4 +59,4 @@ kubectl apply --filename $(pwd)/k8s/lets-encrypt-certificate.yaml --namespace ${
 # https://whynopadlock.com
 # https://www.ssllabs.com/ssltest/
 
-bash ../common-kubernetes/scripts/footer.sh "LET'S ENCRYPT HAS BEEN SET UP"
+bash ${COMMON}/footer.sh "LET'S ENCRYPT HAS BEEN SET UP"

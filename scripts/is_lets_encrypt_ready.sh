@@ -9,7 +9,12 @@
 #                                                               __/ | |                                  __/ |       
 #                                                              |___/|_|                                 |___/        
 
-bash ../common-kubernetes/scripts/header.sh "IS LET'S ENCRYPT...?"
+DIRECTORY="$(dirname "$0")"
+COMMON=${DIRECTORY}/../common-kubernetes/scripts
+
+bash ${COMMON}/header.sh "IS LET'S ENCRYPT...?"
+
+bash ${COMMON}/print_divider.sh
 
 if [[ -z "${FOLDER}" ]]; then   
     echo "No FOLDER supplied."
@@ -21,9 +26,12 @@ export KUBECONFIG=${FOLDER}/kube_config.yaml
 
 echo "pwd:" $(pwd)
 
+bash ${COMMON}/print_divider.sh
+echo "kubectl get all --all-namespaces"
+bash ${COMMON}/print_divider.sh
 kubectl get all --all-namespaces
+bash ${COMMON}/print_divider.sh
 
-#
 #
 # kubectl apply --filename lets-encrypt-issuer.yaml --namespace ${NAMESPACE}
 #
@@ -47,4 +55,4 @@ kubectl get all --all-namespaces
 # https://whynopadlock.com
 # https://www.ssllabs.com/ssltest/
 
-bash ../common-kubernetes/scripts/footer.sh "LET'S ENCRYPT IS READY"
+bash ${COMMON}/footer.sh "LET'S ENCRYPT IS READY"
