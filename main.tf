@@ -23,8 +23,8 @@ module "kubernetes-cluster" {
   public_subnet_cidr_block = var.public_subnet_cidr_block
   availability_zone        = var.availability_zone
 
-  domain    = "morsley.io"
-  subdomain = "concourse"
+  domain    = var.domain
+  subdomain = var.subdomain
 
   folder = local.folder
 
@@ -214,7 +214,7 @@ resource "null_resource" "is-lets-encrypt-ready" {
 
 # Configure Route53...
 module "route53" {
-
+  
   source = "../terraform-aws-kubernetes-cluster/modules/route53"
 
   domain    = var.domain

@@ -7,7 +7,7 @@ spec:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: admin@morsley.uk
     privateKeySecretRef:
-      name: lets-encrypt-tls-real
+      name: lets-encrypt-real
     solvers:  
     - http01:
         ingress:
@@ -22,7 +22,7 @@ spec:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     email: admin@morsley.uk
     privateKeySecretRef:
-      name: lets-encrypt-tls-test
+      name: lets-encrypt-test
     solvers:
       - http01:
           ingress:
