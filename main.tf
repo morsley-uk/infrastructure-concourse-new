@@ -74,6 +74,34 @@ resource "local_file" "postgresql-persistent-volume-0-yaml" {
 
 }
 
+# https://www.terraform.io/docs/providers/random/r/password.html
+
+resource "random_password" "admin-password" {
+
+  length = 25
+
+  lower = true
+  min_lower = 5
+  upper = true
+  min_upper = 5
+  number = true
+  min_numeric = 5
+  special = true
+  min_special = 3
+
+}
+
+# https://www.terraform.io/docs/providers/aws/r/s3_bucket.html
+
+resource "aws_s3_bucket_object" "admin-password-txt" {
+
+  bucket  = local.bucket_name
+  key     = "/${var.cluster_name}/admin_password.txt"
+  content = random_password.admin-password.result
+  content_type = "text/*"
+
+}
+
 # Install Concourse on the above Kubernetes cluster...
 resource "null_resource" "install-concourse" {
 

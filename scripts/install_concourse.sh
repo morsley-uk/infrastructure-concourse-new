@@ -53,6 +53,7 @@ kubectl create namespace ${NAMESPACE}
 
 helm install ${DEPLOYMENT_NAME} concourse/concourse \
   --values $(pwd)/k8s/concourse-values.yaml \
+  --secrets.localUsers=admin:admin \
   --namespace ${NAMESPACE}
 
 bash ${COMMON}/footer.sh "CONCOURSE INSTALLED"
