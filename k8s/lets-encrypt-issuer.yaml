@@ -1,23 +1,29 @@
-apiVersion: cert-manager.io/v1alpha3
+apiVersion: cert-manager.io/v1alpha2
 kind: Issuer
 metadata:
   name: lets-encrypt-real
 spec:
   acme:    
-    server: https://acme-01.api.letsencypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     email: admin@morsley.uk
     privateKeySecretRef:
-      name: lets-encrypt-real
-    http01: {}
+      name: lets-encrypt-tls-real
+    solvers:  
+    - http01:
+        ingress:
+          class: nginx
 ---
-apiVersion: cert-manager.io/v1alpha3
+apiVersion: cert-manager.io/v1alpha2
 kind: Issuer
 metadata:
   name: lets-encrypt-test
 spec:
   acme:
-    server: https://acme-staging.api.letsencypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     email: admin@morsley.uk
     privateKeySecretRef:
-      name: lets-encrypt-test
-    http01: {}
+      name: lets-encrypt-tls-test
+    solvers:
+      - http01:
+          ingress:
+            class: nginx

@@ -25,7 +25,7 @@ echo "NAMESPACE:" ${NAMESPACE}
 
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
-kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.14/deploy/manifests/00-crds.yaml
+kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.12/deploy/manifests/00-crds.yaml
 
 kubectl create namespace ${NAMESPACE}
 
@@ -34,7 +34,9 @@ helm repo add jetstack https://charts.jetstack.io
 helm repo update
 
 helm install cert-manager jetstack/cert-manager \
-  --version v0.14.2 \
+  --version v0.12.0 \
+  --set ingressShim.defaultIssuerName=lets-encrypt-test \
+  --set ingressShim.defaultIssuerKind=Issuer \  
   --namespace ${NAMESPACE}
 
 bash ../common-kubernetes/scripts/footer.sh "CERT-MANAGER INSTALLED"
