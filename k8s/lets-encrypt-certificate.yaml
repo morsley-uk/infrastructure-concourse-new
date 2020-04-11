@@ -3,7 +3,7 @@ kind: Certificate
 metadata:
   name: tls-concourse-ingress
 spec:
-  dnsNmaes:
+  dnsNames:
     - concourse.morsley.io
   secretName: tls-concourse-ingress
   issuerRef:
