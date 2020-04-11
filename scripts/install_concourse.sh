@@ -34,8 +34,8 @@ echo "pwd:" $(pwd)
                                         
 export KUBECONFIG=${FOLDER}/kube_config.yaml
 
-chmod 400 ${FOLDER}/*.pem
-chmod 400 ${FOLDER}/*.pub
+#chmod 400 ${FOLDER}/*.pem
+#chmod 400 ${FOLDER}/*.pub
   
 kubectl apply --filename $(pwd)/k8s/worker-storage-class.yaml
 kubectl apply --filename ${FOLDER}/worker-persistent-volume-0.yaml

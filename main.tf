@@ -74,14 +74,13 @@ resource "local_file" "postgresql-persistent-volume-0-yaml" {
 
 }
 
-# Using Helm install Concourse on the previously created Kubernetes cluster...
+# Install Concourse on the above Kubernetes cluster...
 resource "null_resource" "install-concourse" {
 
   depends_on = [
     aws_ebs_volume.worker-ebs,
     aws_ebs_volume.postgresql-ebs,
-    module.kubernetes-cluster #,
-    #null_resource.is-istio-ready
+    module.kubernetes-cluster
   ]
 
   # https://www.terraform.io/docs/provisioners/local-exec.html
